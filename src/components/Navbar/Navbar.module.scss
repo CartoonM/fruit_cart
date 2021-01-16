@@ -1,0 +1,10 @@
+$fill: #2be02b;
+$empty: white;
+
+.Navbar .empty {
+    color: $empty;
+}
+
+.Navbar .fill {
+    color: $fill;
+}

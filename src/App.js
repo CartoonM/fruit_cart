@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import {connect} from "react-redux";
+import {Route, Switch, Redirect, withRouter} from 'react-router-dom';
+import Layout from './hoc/Layout/Layout';
+import Navbar from "./components/Navbar/Navbar";
+import ProductList from "./containers/ProductList/ProductList";
+import CartPage from './containers/CartPage/CartPage';
 
-function App() {
+function App({ shoppingCart }) {
+
+  const routes = (
+    <Switch>
+      <Route path='/cart' component={CartPage}/>
+      <Route path='/' component={ProductList}/>
+      <Redirect to='/' />
+    </Switch>
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar  shoppingCart={shoppingCart} />
+      <Layout>
+        {routes}
+      </Layout>
+    </>
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    shoppingCart: state.shoppingCart
+  };
+}
+
+export default withRouter(connect(mapStateToProps)(App));
